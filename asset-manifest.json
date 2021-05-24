@@ -1,17 +1,17 @@
 {
   "files": {
-    "main.js": "/habit-tracker-sber-app-frontend/static/js/main.8a78be9c.chunk.js",
-    "main.js.map": "/habit-tracker-sber-app-frontend/static/js/main.8a78be9c.chunk.js.map",
+    "main.js": "/habit-tracker-sber-app-frontend/static/js/main.e9a0b11d.chunk.js",
+    "main.js.map": "/habit-tracker-sber-app-frontend/static/js/main.e9a0b11d.chunk.js.map",
     "runtime-main.js": "/habit-tracker-sber-app-frontend/static/js/runtime-main.8624f373.js",
     "runtime-main.js.map": "/habit-tracker-sber-app-frontend/static/js/runtime-main.8624f373.js.map",
-    "static/js/2.ab5f82fe.chunk.js": "/habit-tracker-sber-app-frontend/static/js/2.ab5f82fe.chunk.js",
-    "static/js/2.ab5f82fe.chunk.js.map": "/habit-tracker-sber-app-frontend/static/js/2.ab5f82fe.chunk.js.map",
+    "static/js/2.a544689f.chunk.js": "/habit-tracker-sber-app-frontend/static/js/2.a544689f.chunk.js",
+    "static/js/2.a544689f.chunk.js.map": "/habit-tracker-sber-app-frontend/static/js/2.a544689f.chunk.js.map",
     "index.html": "/habit-tracker-sber-app-frontend/index.html",
-    "static/js/2.ab5f82fe.chunk.js.LICENSE.txt": "/habit-tracker-sber-app-frontend/static/js/2.ab5f82fe.chunk.js.LICENSE.txt"
+    "static/js/2.a544689f.chunk.js.LICENSE.txt": "/habit-tracker-sber-app-frontend/static/js/2.a544689f.chunk.js.LICENSE.txt"
   },
   "entrypoints": [
     "static/js/runtime-main.8624f373.js",
-    "static/js/2.ab5f82fe.chunk.js",
-    "static/js/main.8a78be9c.chunk.js"
+    "static/js/2.a544689f.chunk.js",
+    "static/js/main.e9a0b11d.chunk.js"
   ]
 }
