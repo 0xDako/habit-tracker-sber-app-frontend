@@ -16,15 +16,25 @@ const HabitBoxRow = styled(Row)`
   margin: 2rem 0;
 `;
 
+
 const CheckboxContainer = styled.div`
   display: flex;
   justify-content: center;
+`;
+
+const TrackerContainer = styled.div`
+  display: flex;
+  margin-top: 1rem;
+  padding-right: 1rem;
 `;
 
 const IconTrashContainer = styled.div`
   position: absolute;
   top: 1rem;
   right: 1rem;
+  @media only screen and (max-width: 600px) {
+    right: 0rem;
+  }
 `;
 
 const HabitCardContainer = styled(CardContent)`
@@ -39,6 +49,11 @@ const HabitCard = styled(Card)`
   margin: 1.5rem 2rem 0;
   :last-of-type {
     margin-bottom: 10rem;
+
+  }
+  @media only screen and (max-width: 600px) {
+    margin: 1rem 0rem 1rem 0;
+    padding-right: 1rem;
   }
 `;
 
@@ -82,9 +97,9 @@ const HabitBox = ({
               <Col type="calc" size={6}>
                 <TextBox size="l" subTitle={subTitle} title={habitName} />
               </Col>
-
+              <TrackerContainer>
               {days.map((m) => (
-                <Col type="calc" size={1} key={m[0]}>
+                <Col type="calc" size={0.9} key={m[0]}>
                   <DateTextBox
                     size="m"
                     title={m[1].slice(5, 10)}
@@ -100,6 +115,7 @@ const HabitBox = ({
                   </CheckboxContainer>
                 </Col>
               ))}
+              </TrackerContainer>
             </HabitBoxRow>
           </Container>
           <IconTrashContainer

@@ -19,6 +19,7 @@ const CreationFormField = styled(TextField)`
 `;
 
 const HabitCard = styled(Card)`
+
   width: 50%;
   position: absolute;
   top: 50%;
@@ -27,10 +28,17 @@ const HabitCard = styled(Card)`
   padding: 2rem;
   background-color: ${background};
   background-image: ${gradient};
+  @media only screen and (max-width: 900px) {
+    width: 90%;
+  }
+
 `;
 const HabitCreationFormWrapper = styled.div`
   display: flex;
   margin: 2.5rem 0;
+  @media only screen and (max-width: 600px) {
+    margin: 1rem 0;
+  }
 `;
 
 const StepperLabel = styled(TextBox)`
