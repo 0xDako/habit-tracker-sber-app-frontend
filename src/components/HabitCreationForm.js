@@ -6,6 +6,7 @@ import {
   CardContent,
   Button,
   Stepper,
+  
 } from "@sberdevices/plasma-ui";
 import styled from "styled-components";
 import {
@@ -16,7 +17,21 @@ import {
 const CreationFormField = styled(TextField)`
   flex-grow: 1;
   margin-right: 1rem;
+  
+  @media only screen and (max-width: 600px) {
+    margin-right: 0;
+  
+  }
 `;
+
+const StepperWrapper = styled.div`
+  @media only screen and (max-width: 600px) {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    margin-left: 1rem;
+  }
+`
 
 const HabitCard = styled(Card)`
 
@@ -37,12 +52,16 @@ const HabitCreationFormWrapper = styled.div`
   display: flex;
   margin: 2.5rem 0;
   @media only screen and (max-width: 600px) {
-    margin: 1rem 0;
+    margin: 2rem 0;
+    flex-direction: column;
   }
 `;
 
 const StepperLabel = styled(TextBox)`
   margin-bottom: 0.5rem;
+  @media only screen and (max-width: 900px) {
+    margin-right: 1rem
+  }
 `;
 
 const HabitCreationForm = ({
@@ -67,7 +86,7 @@ const HabitCreationForm = ({
                 setCreateHabitNameState(text.target.value);
               }}
             />
-            <div>
+            <StepperWrapper>
               <StepperLabel size="m" subTitle="Время выработки" />
               <Stepper
                 step={1}
@@ -76,7 +95,7 @@ const HabitCreationForm = ({
                   setCreateHabitCountState(count);
                 }}
               />
-            </div>
+            </StepperWrapper>
           </HabitCreationFormWrapper>
           <Button
             text="Создать"

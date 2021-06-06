@@ -249,7 +249,7 @@ function App() {
   return (
     <React.Fragment>
       <HabitHeader>
-        <TextBox size="l" title={`Ваши привычки:`} />
+        <TextBox size="l" title={`Текущие привычки:`} />
         <HabitCreationButton
           onClick={() => {
             setPopupActive(!isPopupActive);
