@@ -9,7 +9,6 @@ import {
   addActivity,
   deleteActivity,
 } from "./APIHelper.js";
-
 import HabitBox from "./components/HabitBox";
 import HabitCreationForm from "./components/HabitCreationForm";
 import HabitCreationButton from "./components/HabitCreationButton";
@@ -29,7 +28,7 @@ const initializeAssistant = (getState /*: any*/) => {
   if (process.env.NODE_ENV === "development") {
     return createSmartappDebugger({
       token: process.env.REACT_APP_TOKEN ?? "",
-      initPhrase: `Запусти Habit-tracker`,
+      initPhrase: `Запусти Трекер привычек`,
       getState,
     });
   }
@@ -54,7 +53,7 @@ function App() {
   const createHabitName = useRef("");
   const createHabitCount = useRef("");
   const [createHabitNameState, setCreateHabitNameState] = useState("");
-  const [createHabitCountState, setCreateHabitCountState] = useState(66);
+  const [createHabitCountState, setCreateHabitCountState] = useState(1);
 
 
   const [userHabits, setUserHabits] = useState([]);
@@ -74,6 +73,11 @@ function App() {
   useEffect(() => {
     //Инициализация ассистента
     assistant.current = initializeAssistant(() => getStateForAssistant());
+    assistant.current.sendData({
+      action:{
+        action_id: "startApp",
+      },
+    });
     assistant.current.on("start", (event) => {
       console.log(`assistant.on(start)`, event);
     });
@@ -130,15 +134,35 @@ function App() {
           setCreateHabitNameState(action.data);
           break;
         case "setHabbitTime":
+          if(action.data<=0){
+            assistant.current.sendData({
+              action:{
+                action_id: "wrongHabitTime",
+              },
+            });
+            break;
+          }
           setCreateHabitCountState(action.data);
           break;
         case "createHabit":
           if (createHabitName.current) {
             setPopupActive(false);
             createHabbitAction();
+            
           }
+          else if (isPopupActive){
+            assistant.current.sendData({
+              action:{
+                action_id: "emptyHabitName",
+              },
+            });
+          }
+          break;
         case "deleteHabit":
-          deleteHabit(action.data)
+          if(action.data!=""){
+            deleteHabit(action.data)
+            console.log("Delete habit", action.data)
+          }
           break;
         case "completeHabit":
           const year = action.date.year
@@ -146,18 +170,20 @@ function App() {
           const day = action.date.day
           let HabitId="";
           console.log(action.data)
-          userHabits.map(({ _id, Name}, i) => {
-            if(Name.toLowerCase() == action.data.toLowerCase()){
-              HabitId=_id
-              console.log("HabitId")
+          getAllHabit(userId.current).then((x) => {
+            x.map(({ _id, Name}, i) => {
+              if(Name.toLowerCase() == action.data.toLowerCase()){
+                HabitId=_id
+                console.log("HabitId")
+              }
+            });
+            if (HabitId == ""){
+              return
+            }
+            else{
+              updateActivityAction(HabitId, year + "-" + month + "-" + day + "T19:47:00.571Z", true)
             }
           });
-          if (HabitId == ""){
-            return
-          }
-          else{
-            updateActivityAction(HabitId, year + "-" + month + "-" + day + "T19:47:00.571Z", true)
-          }
           break;
         default:
           break;
@@ -166,17 +192,19 @@ function App() {
   };
 
   const deleteHabit =(HabitName)=>{
-    userHabits.map(({ _id, Name}, i) => {
-      if(HabitName.toLowerCase() == Name.toLowerCase()){
-        deleteHabitAction(_id);
-        assistant.current.sendData({
-          action: { action_id: "successDelete" },
-        });
-        return
-      }
-    });
-    assistant.current.sendData({
-      action: { action_id: "BadDelete" },
+    console.log(userHabits)
+    
+    getAllHabit(userId.current).then((x) => {
+      let action_id="BadDelete"
+      x.map(({ _id, Name}, i) => {
+        if(HabitName.toLowerCase() == Name.toLowerCase()){
+          action_id= "successDelete" 
+          deleteHabitAction(_id);
+        }
+      });
+      assistant.current.sendData({
+        action: { action_id: action_id },
+      });
     });
   }
 
@@ -203,27 +231,36 @@ function App() {
     console.log("CreateHabit", createHabitName.current);
     console.log("Count", createHabitCount);
 
+    const name = createHabitName.current[0].toUpperCase()+createHabitName.current.substring(1)
+
     createHabbit(
       userId.current,
-      createHabitName.current,
+      name,
       createHabitCount.current
     ).then(() =>
       getAllHabit(userId.current).then((x) => {
         console.log(x);
         setUserHabits(x);
         assistant.current.sendData({
-          action: { action_id: "successAdd" },
+          action:{
+            action_id: "howToCompleteHabit",
+            parameters:{
+              text:`Привычка удачно добавлена. Чтобы отметить выполнение привычки нужно сказать: Выполнил привычку  ${name} сегодня. Вместо сегодня можно назвать дату, например первое мая.`
+            },
+          },
         });
       })
+      
     );
     createHabitName.current = "";
     setCreateHabitNameState("");
-    setCreateHabitCountState(66);
+    setCreateHabitCountState(1);
     console.log(userHabits)
   };
 
 
   const deleteHabitAction = (habitId) => {
+    console.log("DeleteHabitAction", habitId)
     deleteHabbit(habitId).then(() =>
       getAllHabit(userId.current).then((x) => {
         setUserHabits(x);
