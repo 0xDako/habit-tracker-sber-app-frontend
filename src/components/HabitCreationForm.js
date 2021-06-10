@@ -6,6 +6,7 @@ import {
   CardContent,
   Button,
   Stepper,
+  
 } from "@sberdevices/plasma-ui";
 import styled from "styled-components";
 import {
@@ -16,7 +17,21 @@ import {
 const CreationFormField = styled(TextField)`
   flex-grow: 1;
   margin-right: 1rem;
+  
+  @media only screen and (max-width: 600px) {
+    margin-right: 0;
+  
+  }
 `;
+
+const StepperWrapper = styled.div`
+  @media only screen and (max-width: 600px) {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    margin-left: 1rem;
+  }
+`
 
 const HabitCard = styled(Card)`
   width: 50%;
@@ -27,14 +42,24 @@ const HabitCard = styled(Card)`
   padding: 2rem;
   background-color: ${background};
   background-image: ${gradient};
+  @media only screen and (max-width: 900px) {
+    width: 90%;
+  }
 `;
 const HabitCreationFormWrapper = styled.div`
   display: flex;
   margin: 2.5rem 0;
+  @media only screen and (max-width: 600px) {
+    margin: 2rem 0;
+    flex-direction: column;
+  }
 `;
 
 const StepperLabel = styled(TextBox)`
   margin-bottom: 0.5rem;
+  @media only screen and (max-width: 900px) {
+    margin-right: 1rem
+  }
 `;
 
 const HabitCreationForm = ({

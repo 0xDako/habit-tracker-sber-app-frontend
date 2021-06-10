@@ -16,4 +16,7 @@ export const HabitHeader = styled.div`
     background-color: rgba(0,0,0,.6);
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
+    @media only screen and (max-width: 600px) {
+        padding: 1rem 1rem;
+    }
     `

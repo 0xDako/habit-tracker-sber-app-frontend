@@ -16,15 +16,25 @@ const HabitBoxRow = styled(Row)`
   margin: 2rem 0;
 `;
 
+
 const CheckboxContainer = styled.div`
   display: flex;
   justify-content: center;
+`;
+
+const TrackerContainer = styled.div`
+  display: flex;
+  margin-top: 1rem;
+  padding-right: 1rem;
 `;
 
 const IconTrashContainer = styled.div`
   position: absolute;
   top: 1rem;
   right: 1rem;
+  @media only screen and (max-width: 600px) {
+    right: 0rem;
+  }
 `;
 
 const HabitCardContainer = styled(CardContent)`
@@ -40,8 +50,11 @@ const HabitCard = styled(Card)`
   :last-of-type {
     margin-bottom: 10rem;
   }
+  @media only screen and (max-width: 600px) {
+    margin: 1rem 0rem 1rem 0;
+    padding-right: 1rem;
+  }
 `;
-
 const HabitBox = ({
   habitId,
   habitName,

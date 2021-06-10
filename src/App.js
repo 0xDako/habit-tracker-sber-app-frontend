@@ -172,7 +172,8 @@ function App() {
           console.log(action.data)
           getAllHabit(userId.current).then((x) => {
             x.map(({ _id, Name}, i) => {
-              if(Name.toLowerCase() == action.data.toLowerCase()){
+              console.log(Name.toLowerCase())
+              if(Name.toLowerCase().trim() == action.data.toLowerCase().trim()){
                 HabitId=_id
                 console.log("HabitId")
               }
