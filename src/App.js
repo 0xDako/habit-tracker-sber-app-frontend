@@ -198,7 +198,7 @@ function App() {
     getAllHabit(userId.current).then((x) => {
       let action_id="BadDelete"
       x.map(({ _id, Name}, i) => {
-        if(HabitName.toLowerCase() == Name.toLowerCase()){
+        if(HabitName.toLowerCase().trim() == Name.toLowerCase().trim()){
           action_id= "successDelete" 
           deleteHabitAction(_id);
         }
